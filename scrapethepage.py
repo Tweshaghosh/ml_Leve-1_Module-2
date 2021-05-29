@@ -9,7 +9,8 @@ from selenium import webdriver
 import pandas as pd
 import json
 from collections import Counter
-from nltk.corpus import stopwords
+
+# from nltk.corpus import stopwords
 
 
 from selenium.webdriver.remote.utils import dump_json
@@ -17,9 +18,9 @@ from selenium.webdriver.remote.utils import dump_json
 
 class ScrapeThePage:
     def __init__(self):
-        webDriverWithPath = (
-            "/Users/bhaskarghosh/BGEverything/general_dev/stemaway/ml/l1m2/chromedriver"
-        )
+        path = os.getcwd()
+        print(path)
+        webDriverWithPath = path + "/chromedriver"
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument(
             "--ignore-certificate-errors"
@@ -32,12 +33,21 @@ class ScrapeThePage:
         )
         now = datetime.now()
         date_time = now.strftime("%m_%d_%Y_%H_%M_%S")
-        self.result_file_name = (
-            "/Users/bhaskarghosh/BGEverything/general_dev/stemaway/ml/l1m2/sa_l2m2_"
-            + date_time
-            + ".json"
-        )
-        self.stop = set(stopwords.words("english"))
+        self.result_file_name = path + "/sa_l2m2_" + date_time + ".json"
+        st_list = [
+            "i",
+            "me",
+            "my",
+            "myself",
+            "we",
+            "our",
+            "ours",
+            "ourselves",
+            "you",
+            "you're",
+        ]
+        # self.stop = set(stopwords.words("english"))
+        self.stop = set(st_list)
 
     def close(self):
         self.driver.close()
